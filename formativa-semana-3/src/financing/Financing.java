@@ -20,9 +20,9 @@ public class Financing {
     return this.calculateMonthlyPayment() * this.financingDeadline * 12;
   }
 
-  public void printFinancingData() {
-    System.out.println("Valor total do financiamento: " + this.calculateTotalPayment());
-    System.out.println("Valor do imóvel: " + this.propertyValue);
+  public void printFinancingData(int index) {
+    System.out.println("Financiamento " + (index  + 1) + " - valor do imóvel: R$ " + this.getPropertyValue()
+        + ", valor do financiamento: R$ " + this.calculateTotalPayment());
   }
 
   // getters
