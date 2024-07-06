@@ -3,16 +3,16 @@ import java.util.Scanner;
 class Financing {
     double propertyValue;
     int financingDeadline;
-    double anualRate;
+    double annualRate;
 
     Financing(double value, int deadline, double interestRate) {
         this.propertyValue = value;
         this.financingDeadline = deadline;
-        this.anualRate = interestRate;
+        this.annualRate = interestRate;
     }
 
     double calculateMonthlyPayment() {
-        return (this.propertyValue / (this.financingDeadline * 12)) * (1 + (this.anualRate / 12));
+        return (this.propertyValue / (this.financingDeadline * 12)) * (1 + (this.annualRate / 12));
     }
 
     double calculateTotalPayment() {

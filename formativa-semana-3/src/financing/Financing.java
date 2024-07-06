@@ -3,17 +3,17 @@ package financing;
 public class Financing {
   private double propertyValue;
   private int financingDeadline;
-  private double anualRate;
+  private double annualRate;
 
   public Financing(double value, int deadline, double interestRate) {
     this.propertyValue = value;
     this.financingDeadline = deadline;
-    this.anualRate = interestRate;
+    this.annualRate = interestRate;
   }
 
   // methods
   public double calculateMonthlyPayment() {
-    return (this.propertyValue / (this.financingDeadline * 12)) * (1 + (this.anualRate / 12));
+    return (this.propertyValue / (this.financingDeadline * 12)) * (1 + (this.annualRate / 12));
   }
 
   public double calculateTotalPayment() {
@@ -35,6 +35,6 @@ public class Financing {
   }
 
   public double getAnualRate() {
-    return this.anualRate;
+    return this.annualRate;
   }
 }

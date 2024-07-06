@@ -1,13 +1,13 @@
 package financing;
 
 public class Apartment extends Financing {
-  private int garageSpaces;
+  private int garageSpace;
   private int floorNumber;
 
-  public Apartment(double value, int deadline, double interestRate, int garageSpaces, int floorNumber) {
+  public Apartment(double value, int deadline, double interestRate, int garageSpace, int floorNumber) {
     super(value, deadline, interestRate);
 
-    this.garageSpaces = garageSpaces;
+    this.garageSpace = garageSpace;
     this.floorNumber = floorNumber;
   }
 
