@@ -22,11 +22,12 @@ public class Main {
         double interestRate = userInterface.getInterestRate();
         double builtArea = userInterface.getBuiltArea();
         double landArea = userInterface.getLandArea();
+        double monthlyIncrease = userInterface.getMonthlyIncrease();
 
-        House house = new House(propertyValue, financingDeadline, interestRate, builtArea, landArea);
+        House house = new House(propertyValue, financingDeadline, interestRate, builtArea, landArea, monthlyIncrease);
 
         financingList.add(house);
-        financingList.add(new House(500000, 10, 10, 89, 230));
+        financingList.add(new House(500000, 10, 10, 89, 230, 40));
         financingList.add(new Apartment(500000, 10, 10, 26, 10));
         financingList.add(new Apartment(530000, 15, 12, 30, 12));
         financingList.add(new Land(1000000, 20, 6, "Urbana"));
@@ -39,8 +40,13 @@ public class Main {
         double totalFinancing = calculateTotalFinancing(financingList);
 
         customFileHandler.readTextFile("financiamentos.txt");
+
+        System.out.println();
         System.out.println("Total de todos os imóveis: R$ " + totalPropertyValue
                 + ", total de todos os financiamentos: R$ " + totalFinancing);
+
+        customFileHandler.serializeObject(financingList);
+        customFileHandler.deserializeObject();
     }
 
     private static double calculateTotalPropertyValue(List<Financing> list) {

@@ -1,12 +1,13 @@
 package financing;
 
+import java.io.*;
+
 import utils.CustomFileHandler;
 
-public abstract class Financing {
+public abstract class Financing implements Serializable {
   private double propertyValue;
   private int financingDeadline;
   private double annualRate;
-  private CustomFileHandler customFileHandler = new CustomFileHandler();
 
   public Financing(double value, int deadline, double interestRate) {
     this.propertyValue = value;
@@ -23,24 +24,38 @@ public abstract class Financing {
   }
 
   public void printFinancingData() {
-    this.customFileHandler.readTextFile("financiamentos.txt");
+    CustomFileHandler customFileHandler = new CustomFileHandler();
+    customFileHandler.readTextFile("financiamentos.txt");
   }
 
   public StringBuilder fileDataSetup(String type) {
+    CustomFileHandler customFileHandler = new CustomFileHandler();
     StringBuilder sb = new StringBuilder();
 
     int count = customFileHandler.getTextFileLinesCount("financiamentos.txt");
-    if (count == 0) {
-      count = 1;
-    }
-    
-    sb.append("Financiamento ").append(count + " - ").append(type + " - ");
-    sb.append("valor do imóvel: ").append("R$ " + this.getPropertyValue()).append(", ");
-    sb.append("valor do financiamento: ").append("R$ " + Math.round(this.calculateTotalPayment())).append(", ");
-    sb.append("taxa de juros: ").append(this.getAnnualRate() + "%").append(", ");
-    sb.append("prazo do financiamento: ").append(this.getFinancingDeadline() + " anos").append(", ");
+
+    sb.append("Financiamento ")
+      .append(count + 1 + " - ").append(type + " - ")
+      .append("valor do imóvel: ").append("R$ " + Math.round(this.getPropertyValue()))
+      .append(", valor do financiamento: ")
+      .append("R$ " + Math.round(this.calculateTotalPayment()))
+      .append(", taxa de juros: ").append(this.getAnnualRate() + "%")
+      .append(", prazo do financiamento: ").append(this.getFinancingDeadline() + " anos");
 
     return sb;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Financiamento {")
+      .append("\n  valor da propriedade: ").append("R$ " + Math.round(this.getPropertyValue()))
+      .append(",\n  prazo do financiamento: ").append(this.getFinancingDeadline() + " anos")
+      .append(",\n  taxa de juros: ").append(this.getAnnualRate() + "%")
+      .append("\n}");
+
+    return sb.toString();
   }
 
   public abstract void writeFile();

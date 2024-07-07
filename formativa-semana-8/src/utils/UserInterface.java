@@ -99,4 +99,15 @@ public class UserInterface {
       return 0;
     }
   }
+
+  public double getMonthlyIncrease() {
+    try {
+      String msg = "Informe o acréscimo na mensalidade da casa: ";
+      String error = "O acréscimo deve ser maior que 0. Tente novamente.";
+
+      return this.getValidatedInput(msg, error, Double.class, value -> value > 0);
+    } catch (InvalidInputException e) {
+      return 0;
+    }
+  }
 }

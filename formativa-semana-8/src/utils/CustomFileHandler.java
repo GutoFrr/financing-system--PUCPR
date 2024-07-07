@@ -1,19 +1,13 @@
 package utils;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.util.List;
+
+import financing.Financing;
 
 public class CustomFileHandler {
-  private OutputStreamWriter writer = null;
-  private BufferedReader reader = null;
-
   public void writeTextFile(String fileName, String data, boolean append) {
+    OutputStreamWriter writer = null;
     try {
       writer = new OutputStreamWriter(new FileOutputStream(fileName, append), "UTF-8");
 
@@ -29,12 +23,12 @@ public class CustomFileHandler {
   }
 
   public void readTextFile(String fileName) {
+    BufferedReader reader = null;
     try {
       reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
 
       String line;
       while ((line = reader.readLine()) != null) {
-
         System.out.println(line);
       }
 
@@ -47,6 +41,7 @@ public class CustomFileHandler {
   }
 
   public int getTextFileLinesCount(String fileName) {
+    BufferedReader reader = null;
     try {
       reader = new BufferedReader(new FileReader(fileName));
 
@@ -64,5 +59,41 @@ public class CustomFileHandler {
       e.printStackTrace();
     }
     return 0;
+  }
+
+  public void serializeObject(List<Financing> financingList) {
+    ObjectOutputStream outputStream = null;
+    try {
+      outputStream = new ObjectOutputStream(new FileOutputStream("novosFinanciamentos.test"));
+
+      outputStream.writeObject(financingList);
+
+      outputStream.flush();
+      outputStream.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void deserializeObject() {
+    ObjectInputStream inputStream = null;
+    try {
+      inputStream = new ObjectInputStream(new FileInputStream("novosFinanciamentos.test"));
+
+      System.out.println();
+      System.out.println("===== Novos financiamentos =====");
+
+      List<Financing> financingList = (List<Financing>) inputStream.readObject();
+      for (Financing item : financingList) {
+        System.out.println();
+        System.out.println(item.toString());
+      }
+
+      inputStream.close();
+    } catch (EOFException e) {
+      System.out.println("Fim do arquivo.");
+    } catch (IOException | ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 }

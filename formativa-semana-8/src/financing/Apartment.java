@@ -5,7 +5,6 @@ import utils.CustomFileHandler;
 public class Apartment extends Financing {
   private int garageSpace;
   private int floorNumber;
-  private CustomFileHandler customFileHandler = new CustomFileHandler();
 
   public Apartment(double value, int deadline, double interestRate, int garageSpace, int floorNumber) {
     super(value, deadline, interestRate);
@@ -26,13 +25,22 @@ public class Apartment extends Financing {
 
   @Override
   public void writeFile() {
+    CustomFileHandler customFileHandler = new CustomFileHandler();
     StringBuilder sb = super.fileDataSetup("Apartamento");
 
-    sb.append("andar do apartamento: ").append(this.floorNumber).append(", ");
-    sb.append("vaga da garagem: ").append(this.garageSpace + " m²");
+    sb.append("andar do apartamento: ").append(this.getFloorNumber());
+    sb.append(", vaga da garagem: ").append(this.getGarageSpace() + " m²");
 
     String fileData = sb.append(". \n").toString();
 
     customFileHandler.writeTextFile("financiamentos.txt", fileData, true);
+  }
+
+  public int getFloorNumber() {
+    return this.floorNumber;
+  }
+
+  public int getGarageSpace() {
+    return this.garageSpace;
   }
 }
